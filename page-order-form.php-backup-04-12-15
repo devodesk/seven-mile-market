@@ -1,0 +1,631 @@
+<?php
+
+/**
+
+* Template Name: order form
+
+*/
+
+
+ 
+get_header(); ?>
+<?php 
+if(isset($_POST['orderform'])): 
+//print_r($_POST['orderform']);
+//print_r($_POST['orderform']['order']);
+
+
+//$to = 'ismailcseku@gmail.com, yael@staiman.com, order@sevenmilemarket.com';
+$to = 'ismailcseku@gmail.com';
+$subject = 'Sevenmile Ordering Form';
+$headers = array('Content-Type: text/html; charset=UTF-8');
+
+
+$body = 'ONLINE ORDERING FORM'.'<br>';
+$body .= '------------------------'.'<br>';
+
+$body .= '<h3><strong>Delivery Information</strong></h3>';
+$body .= 'Name: '.$_POST['orderform']['name'].'<br>';
+$body .= 'Street Address: '.$_POST['orderform']['streetaddress'].'<br>';
+$body .= 'Apt./Flr./Suite: '.$_POST['orderform']['apt_flr_suite'].'<br>';
+$body .= 'City: '.$_POST['orderform']['city'].'<br>';
+$body .= 'State: '.$_POST['orderform']['state'].'<br>';
+$body .= 'Zip: '.$_POST['orderform']['zip'].'<br>';
+$body .= 'Email: '.$_POST['orderform']['email'].'<br>';
+$body .= 'Cell Phone: '.$_POST['orderform']['cellphone'].'<br>';
+$body .= 'Home Phone: '.$_POST['orderform']['homephone'].'<br>';
+
+$body .= '------------------------'.'<br>';
+$body .= '<h3><strong>Billing Information</strong></h3>';
+$body .= 'Full Name on the Card: '.$_POST['orderform']['fullcardname'].'<br>';
+$body .= 'Type of Card: '.$_POST['orderform']['typeofcard'].'<br>';
+$body .= 'Othercard: '.$_POST['orderform']['othercard'].'<br>';
+$body .= 'CC#: '.$_POST['orderform']['cc_number'].'<br>';
+$body .= 'Expiration Month: '.$_POST['orderform']['card_expire']['month'].'<br>';
+$body .= 'Expiration Year: '.$_POST['orderform']['card_expire']['year'].'<br>';
+$body .= 'Security Code: '.$_POST['orderform']['securitycode'].'<br>';
+$body .= '------------------------'.'<br>';
+
+$body .= '<h3><strong>My Order</strong></h3>';
+	$body .= '<table border="1" cellpadding="5" cellspacing="0">';
+foreach($_POST['orderform']['order'] as $eachorder) {
+	$body .= '<tr>';
+	$body .= '<td>Item: '.$eachorder['item'].'</td>';
+	$body .= '<td>Brand: '.$eachorder['item_brand'].'</td>';
+	$body .= '<td>Brand: '.$eachorder['text_brand'].'</td>';
+	$body .= '<td>Size: '.$eachorder['item_size'].'</td>';
+	$body .= '<td>Size: '.$eachorder['text_size'].'</td>';
+	$body .= '<td>Qty: '.$eachorder['qty'].'</td>';
+	$body .= '<td>Description: '.$eachorder['description'].'</td>';
+	$body .= '</tr>';
+}
+	$body .= '</table>';
+	
+$body .= '------------------------'.'<br>';
+
+$body .= '<h3><strong>Delivery Options</strong></h3>';
+$body .= 'Delivery Date: '.$_POST['orderform']['deliverydate'].'<br>';
+$body .= 'Delivery Time: '.$_POST['orderform']['deliverytime'].'<br>';
+$body .= 'Will be home during delivery hours?: '.$_POST['orderform']['home_during_deliver'].'<br>';
+$body .= 'Additional information : '.$_POST['orderform']['additionalinformation'].'<br>';
+$body .= '------------------------'.'<br>';
+?>
+
+<a style="display: none;" id="trigger-order-thank-you" href="" data-toggle="modal" data-target="#order-thank-you"></a>
+<div class="modal fade" id="order-thank-you" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" name="orderform[city]" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Thank you for your order.</h4>
+      </div>
+      <div class="modal-body"> You should receive an email confirmation shortly. If you have any questions or comments, please contact our office at <a href="info:order@sevenmilemarket.com.">order@sevenmilemarket.com.</a></div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+
+$(document).ready(function () {     
+
+    function libertyPop(){  
+        var popUp = jQuery("#trigger-order-thank-you");
+            console.log(popUp);
+        popUp.on('click',function(){
+            console.log("WORKS!");
+        }).click();
+    }
+
+    libertyPop();
+});
+</script>
+<?php
+wp_mail( $to, $subject, $body, $headers );
+
+
+//customer body text
+$subject = 'Sevenmile Online Ordering';
+$customerbody = ' 
+Dear '.$_POST['orderform']['name'].',<br><br>
+
+Thank you for placing your online order with Seven Mile Market. Your order is scheduled to 
+arrive on '.$_POST['orderform']['deliverydate'].' between '.$_POST['orderform']['deliverytime'].', 
+delivering to 
+'.$_POST['orderform']['streetaddress'].', '.$_POST['orderform']['apt_flr_suite'].',
+ '.$_POST['orderform']['city'].''.$_POST['orderform']['state'].', '.$_POST['orderform']['zip'].'.<br>
+If we have any questions, we will contact you at '.$_POST['orderform']['cellphone'].'.
+'.'<br><br>
+Thank you for shopping with us!<br>
+Seven Mile Market Management
+';
+wp_mail( $_POST['orderform']['email'], $subject, $customerbody, $headers );
+
+endif;
+?>
+<div class="motopress-wrapper content-holder clearfix online-ordering-form">
+  <div class="container">
+    <div class="row">
+      <div data-motopress-wrapper-type="content" data-motopress-wrapper-file="page.php" class="span12">
+        <div class="row">
+          <div data-motopress-static-file="static/static-title.php" data-motopress-type="static" class="span12">
+            <section class="title-section">
+              <h1 class="title-header"> </h1>
+              
+              <!-- BEGIN BREADCRUMBS-->
+              
+              <ul class="breadcrumb breadcrumb__t">
+                <li><a href="http://staimanmedia.com/seven-mile-market">Home</a></li>
+                <li class="divider">&thinsp;|&thinsp;</li>
+                <li class="active">Make My Order</li>
+              </ul>
+              
+              <!-- END BREADCRUMBS --> 
+              
+            </section>
+            
+            <!-- .title-section --> 
+            
+          </div>
+        </div>
+        <div class="row">
+          <div data-motopress-loop-file="loop/loop-page.php" data-motopress-type="loop" id="content" class="span10 offset1 right order-contents">
+            <div class="post-2297 page type-page status-publish hentry" id="post-2297"> 
+              
+              <!--Custom icon-->
+              <?php
+				// Start the Loop.
+				if ( have_posts() ) : the_post();
+ 					//the_content();
+				endif;
+			?>
+              <h2 class="color-blue">Online Ordering</h2>
+              <div class="container-fluid" style="padding:0;">
+                <div class="row-fluid">
+                  <div class="span6">
+                    <h4 class="color-brown">Order Times:</h4>
+                    <h4><span class="color-blue">Monday-Thursday</span><br />
+                      Orders - By 7 AM for same day delivery</h4>
+                    <br>
+                    <h4><span class="color-blue">Friday</span><br />
+                      Orders must be in before 6PM Thursday night <br />
+                      <em>No same day delivery for Friday</em></h4>
+                  </div>
+                  <div class="span6">
+                    <h4 class="color-brown">Delivery Times:</h4>
+                    <h4><span class="color-blue">Monday-Thursday</span><br>
+                      11 AM to 6 PM</h4>
+                    <br>
+                    <h4><span class="color-blue">Friday</span><br>
+                      9 AM to 12 PM</h4>
+                  </div>
+                </div>
+                <br>
+                <div class="row-fluid">
+                  <div class="span12 text-center">**Orders received after these times will be delivered the next store day.** </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="span12 text-center">
+                    <ul class="list-inline">
+                      <li class="color-brown">$5 Delivery fee</li>
+                      <li><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/order-list.png" alt="" /></li>
+                      <li class="color-brown">Payment by credit card only </li>
+                      <li><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/order-list.png" alt="" /></li>
+                      <li class="color-brown">Regular prices only, sale prices apply to in store shopping only</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="span12 text-center"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/border-side.png" alt="" /> </div>
+                </div>
+              </div>
+              <p> Thank you for choosing Seven Mile Market for your grocery delivery service. Please fill out the form below with as much detail as possible. Please click on “<a href="http://staimanmedia.com/seven-mile-market/wp-content/uploads/2015/03/5-GENERAL-INFORMATION.docx" style="text-decoration:underline;">Read More</a>” for more information.  If you have any questions, do not hesitate to call or email! </p>
+              <form id="online_order_form" action="<?php echo the_permalink(get_the_ID()) ?>" method="post">
+                <div class="container-fluid" style="padding:0;">
+                  <div class="row-fluid">
+                    <div class="span6">
+                      <h3 class="order-form-heading">Delivery Information</h3>
+                      <table style="letter-spacing: -1px; font-weight: 500;">
+                        <tr>
+                          <td>Name
+                            <input type="text" name="orderform[name]" style="margin-left: 4px; width: 364px;"></td>
+                        </tr>
+                        <tr>
+                          <td>Street Address
+                            <input type="text" name="orderform[streetaddress]" placeholder="" style="width: 150px; margin-left: 3px;">
+                            Apt./Flr./Suite
+                            <input type="text" name="orderform[apt_flr_suite]" style="width: 63px;">
+                        </tr>
+                        <tr>
+                          <td>City
+                            <input type="text" name="orderform[city]" style="width: 130px;">
+                            State
+                            <input type="text" name="orderform[state]" style="width: 61px;">
+                            Zip
+                            <input type="text" name="orderform[zip]" style="width: 100px;">
+                        </tr>
+                        <tr>
+                          <td>Email
+                          <input type="text" name="orderform[email]" style="width: 364px;">
+                        </tr>
+                        <tr>
+                          <td>Cell Phone
+                            <input type="text" name="orderform[cellphone]" style="width: 130px;">
+                            Home Phone
+                            <input type="text" name="orderform[homephone]" style="width: 118px;"></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="span6">
+                      <h3 class="order-form-heading">Billing Information</h3>
+                      <table style="letter-spacing: -1px; font-weight: 500;">
+                        <tr>
+                          <td>Full Name on the Card
+                            <input type="text" name="orderform[fullcardname]" style="margin-left: 4px; width: 274px;"></td>
+                        </tr>
+                        <tr>
+                          <td>Type of Card
+                            <input type="radio" name="orderform[typeofcard]" value="female">
+                            Visa
+                            <input type="radio" name="orderform[typeofcard]" value="visa" checked>
+                            MC
+                            <input type="radio" name="orderform[typeofcard]" value="ms">
+                            AmEx
+                            <input type="radio" name="orderform[typeofcard]" value="amex">
+                            Discover
+                            <input type="radio" name="orderform[typeofcard]" value="amex">
+                            Other
+                            <input type="text" style="width: 78px; margin-left: 1px;" name="orderform[othercard]"></td>
+                        </tr>
+                        <tr>
+                          <td>CC#
+                            <input type="text" name="orderform[cc_number]" style="margin-left: 3px; width: 255px;"></td>
+                        </tr>
+                        <tr>
+                          <td>Expiration Date
+                            <select name="orderform[card_expire][month]" style="margin-left: 3px; width: 60px;">
+                              <option value="01">01</option>
+                              <option value="02">02</option>
+                              <option value="03">03</option>
+                              <option value="04">04</option>
+                              <option value="04">04</option>
+                              <option value="05">05</option>
+                              <option value="06">06</option>
+                              <option value="07">07</option>
+                              <option value="08">08</option>
+                              <option value="09">09</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                            </select>
+                            <select name="orderform[card_expire][year]" style="margin-left: 2px; width: 60px;">
+                              <option value="15">15</option>
+                              <option value="16">16</option>
+                              <option value="17">17</option>
+                              <option value="18">18</option>
+                              <option value="19">19</option>
+                              <option value="20">20</option>
+                              <option value="21">21</option>
+                              <option value="22">22</option>
+                              <option value="23">23</option>
+                              <option value="24">24</option>
+                              <option value="25">25</option>
+                            </select>
+                            Security Code:
+                            <input type="text" name="orderform[securitycode]" style="margin-left: 4px; width: 96px;"></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="repeated-order-form-fields">
+                  <h3 class="order-form-heading">My Order</h3>
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr class="repeatingSection">
+                      <td width="21%">Item
+                        <input type="text" name="orderform[order][1][item]" style="width: 130px;"></td>
+                      <td width="15%">Brand
+                        <select id="orderform_brand-1" class="orderform_brand" name="orderform[order][1][item_brand]" style="margin-left: 2px; width: 90px;">
+                          <option value="" selected>Options</option>
+                          <option value="Generic">Generic</option>
+                          <option value="Brand Name">Brand Name</option>
+                          <option value="Specific Brand">Specific Brand</option>
+                        </select>
+                        <input style="width: 90px; display:none" type="text" name="orderform[order][1][text_brand]"></td>
+                      <td width="13%">Size
+                        <select id="orderform_size-1" class="orderform_size" name="orderform[order][1][item_size]" style="margin-left: 2px; width: 90px;">
+                          <option value="" selected>Options</option>
+                          <option value="Not Sure">Not Sure</option>
+                          <option value="Specific Size">Specific Size</option>
+                        </select>
+                        <input style="width: 90px; display:none" type="text" name="orderform[order][1][text_size]"></td>
+                      <td width="7%">Qty
+                        <input type="number" name="orderform[order][1][qty]" style="width: 30px;" value="1" min="1"></td>
+                      <td width="32%">Description
+                        <textarea id="description" rows="10" cols="6" name="orderform[order][1][description]" placeholder="(optional: Kosher Certification,Cholov Yisroel, etc.)" style="height: 30px; width: 250px;"></textarea></td>
+                    </tr>
+                    <tr class="repeatingSection">
+                      <td width="21%">Item
+                        <input type="text" name="orderform[order][2][item]" style="width: 130px;"></td>
+                      <td width="15%">Brand
+                        <select id="orderform_brand-2" class="orderform_brand" name="orderform[order][2][item_brand]" style="margin-left: 2px; width: 90px;">
+                          <option value="" selected>Options</option>
+                          <option value="Generic">Generic</option>
+                          <option value="Brand Name">Brand Name</option>
+                          <option value="Specific Brand">Specific Brand</option>
+                        </select>
+                        <input style="width: 90px; display:none" type="text" name="orderform[order][2][text_brand]"></td>
+                      <td width="13%">Size
+                        <select id="orderform_size-2" class="orderform_size" name="orderform[order][2][item_size]" style="margin-left: 2px; width: 90px;">
+                          <option value="" selected>Options</option>
+                          <option value="Not Sure">Not Sure</option>
+                          <option value="Specific Size">Specific Size</option>
+                        </select>
+                        <input style="width: 90px; display:none" type="text" name="orderform[order][2][text_size]"></td>
+                      <td width="7%">Qty
+                        <input type="number" name="orderform[order][2][qty]" style="width: 30px;" value="1" min="1"></td>
+                      <td width="32%">Description
+                        <textarea id="description" rows="10" cols="6" name="orderform[order][2][description]" placeholder="(optional: Kosher Certification,Cholov Yisroel, etc.)" style="height: 30px; width: 250px;"></textarea></td>
+                    </tr>
+                    <tr class="repeatingSection">
+                      <td width="21%">Item
+                        <input type="text" name="orderform[order][3][item]" style="width: 130px;"></td>
+                      <td width="15%">Brand
+                        <select id="orderform_brand-3" class="orderform_brand" name="orderform[order][3][item_brand]" style="margin-left: 2px; width: 90px;">
+                          <option value="" selected>Options</option>
+                          <option value="Generic">Generic</option>
+                          <option value="Brand Name">Brand Name</option>
+                          <option value="Specific Brand">Specific Brand</option>
+                        </select>
+                        <input style="width: 90px; display:none" type="text" name="orderform[order][3][text_brand]"></td>
+                      <td width="13%">Size
+                        <select id="orderform_size-3" class="orderform_size" name="orderform[order][3][item_size]" style="margin-left: 2px; width: 90px;">
+                          <option value="" selected>Options</option>
+                          <option value="Not Sure">Not Sure</option>
+                          <option value="Specific Size">Specific Size</option>
+                        </select>
+                        <input style="width: 90px; display:none" type="text" name="orderform[order][3][text_size]"></td>
+                      <td width="7%">Qty
+                        <input type="number" name="orderform[order][3][qty]" style="width: 30px;" value="1" min="1"></td>
+                      <td width="32%">Description
+                        <textarea id="description" rows="10" cols="6" name="orderform[order][3][description]" placeholder="(optional: Kosher Certification,Cholov Yisroel, etc.)" style="height: 30px; width: 250px;"></textarea></td>
+                    </tr>
+                    <tr class="repeatingSection">
+                      <td width="21%">Item
+                        <input type="text" name="orderform[order][4][item]" style="width: 130px;"></td>
+                      <td width="15%">Brand
+                        <select id="orderform_brand-4" class="orderform_brand" name="orderform[order][4][item_brand]" style="margin-left: 2px; width: 90px;">
+                          <option value="" selected>Options</option>
+                          <option value="Generic">Generic</option>
+                          <option value="Brand Name">Brand Name</option>
+                          <option value="Specific Brand">Specific Brand</option>
+                        </select>
+                        <input style="width: 90px; display:none" type="text" name="orderform[order][4][text_brand]"></td>
+                      <td width="13%">Size
+                        <select id="orderform_size-4" class="orderform_size" name="orderform[order][4][item_size]" style="margin-left: 2px; width: 90px;">
+                          <option value="" selected>Options</option>
+                          <option value="Not Sure">Not Sure</option>
+                          <option value="Specific Size">Specific Size</option>
+                        </select>
+                        <input style="width: 90px; display:none" type="text" name="orderform[order][4][text_size]"></td>
+                      <td width="7%">Qty
+                        <input type="number" name="orderform[order][4][qty]" style="width: 30px;" value="1" min="1"></td>
+                      <td width="32%">Description
+                        <textarea id="description" rows="10" cols="6" name="orderform[order][4][description]" placeholder="(optional: Kosher Certification,Cholov Yisroel, etc.)" style="height: 30px; width: 250px;"></textarea></td>
+                    </tr>
+                    <tr class="repeatingSection">
+                      <td width="21%">Item
+                        <input type="text" name="orderform[order][5][item]" style="width: 130px;"></td>
+                      <td width="15%">Brand
+                        <select id="orderform_brand-5" class="orderform_brand" name="orderform[order][5][item_brand]" style="margin-left: 2px; width: 90px;">
+                          <option value="" selected>Options</option>
+                          <option value="Generic">Generic</option>
+                          <option value="Brand Name">Brand Name</option>
+                          <option value="Specific Brand">Specific Brand</option>
+                        </select>
+                        <input style="width: 90px; display:none" type="text" name="orderform[order][5][text_brand]"></td>
+                      <td width="13%">Size
+                        <select id="orderform_size-5" class="orderform_size" name="orderform[order][5][item_size]" style="margin-left: 2px; width: 90px;">
+                          <option value="" selected>Options</option>
+                          <option value="Not Sure">Not Sure</option>
+                          <option value="Specific Size">Specific Size</option>
+                        </select>
+                        <input style="width: 90px; display:none" type="text" name="orderform[order][5][text_size]"></td>
+                      <td width="7%">Qty
+                        <input type="number" name="orderform[order][5][qty]" style="width: 30px;" value="1" min="1"></td>
+                      <td width="32%">Description
+                        <textarea id="description" rows="10" cols="6" name="orderform[order][5][description]" placeholder="(optional: Kosher Certification,Cholov Yisroel, etc.)" style="height: 30px; width: 250px;"></textarea></td>
+                    </tr>
+                  </table>
+                  <div style="text-align:right;"><a class="btn addNewRow" onclick="addImage();">Add another item (+)</a></div>
+                </div>
+                <h3 class="order-form-heading">Delivery Options</h3>
+                <table width="100%">
+                  <tr>
+                    <td colspan="2">Delivery Time and Date <a style="text-decoration:underline;" href="" data-toggle="modal" data-target="#availableTimes">(click for available times)</a>
+                      <input placeholder="Date" class="datepicker" type="text" name="orderform[deliverydate]">
+                      <select name="orderform[deliverytime]" style="margin-left: 2px; width: 120px;">
+                        <option value="M-TH">Options</option>
+                        <option value="M-TH 11-1">M-TH: 11-1</option>
+                        <option value="M-TH 12-2">M-TH: 12-2</option>
+                        <option value="M-TH 1-3">M-TH: 1-3</option>
+                        <option value="M-TH 2-4">M-TH: 2-4</option>
+                        <option value="M-TH 3-5">M-TH: 3-5</option>
+                        <option value="M-TH 4-6">M-TH: 4-6</option>
+                        <option value="Friday 9-11">Friday: 9-11</option>
+                        <option value="Friday 10-12">Friday: 10-12</option>
+                      </select></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">Will you be home during delivery hours?
+                      <input type="radio" name="orderform[home_during_deliver]" value="yes">
+                      Yes
+                      <input type="radio" name="orderform[home_during_deliver]" value="no">
+                      No </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><table class="leave-at-door" style="display: none;">
+                        <tr>
+                          <td colspan="2">Please specify any additional information (e.g. elevator delivery, dog on premises, secure complex, etc):
+                            <input type="text" name="orderform[additionalinformation]" style="width: 100%;"></td>
+                        </tr>
+                        <tr class="leave-at-door-no">
+                          <td colspan="2"><input type="checkbox" name="orderform[i_understand]" style="margin-right: 4px;">
+                            I authorize Seven Mile Market to leave the order I placed at my door. I understand that Seven Mile Market is not responsible for any damage or spoilage that may occur after the order is delivered. I understand that all perishable items are not returnable unless it was an item that I did not order.</td>
+                        </tr>
+                        <tr class="leave-at-door-yes">
+                          <td colspan="2"><input type="checkbox" name="orderform[i_understand]" style="margin-right: 4px;">
+                            I understand that Seven Mile Market is not responsible for any damage or spoilage that may occur after the order is delivered. I understand that all perishable items are not returnable unless it was an item that I did not order.</td>
+                        </tr>
+                      </table></td>
+                  </tr>
+                  <tr class="i_agree_terms">
+                    <td><p>
+                        <label for=""></label>
+                        <input type="checkbox" name="orderform[i_agree_terms]" style="margin-right: 4px;">
+                        By clicking submit, you authorize SEVEN MILE MARKET to charge your card for deliveries. Your credit card will be charged prior to all deliveries. Seven Mile Market has the authority to charge your card any additional fees that may ensue. If you are not present to receive your order and you did not select the Drop Delivery Option we will charge you a $10 restocking fee and you will need to resubmit your order. I have read and agree to the <a href="#" style="text-decoration:underline;">general information and terms and conditions</a> </p></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center;"><input style="margin-top: 30px;" type="submit" name="orderform[submit]" value="Submit"></td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </table>
+              </form>
+            </div>
+            
+            <!--#post--> 
+            
+          </div>
+          <!--<div class="span3 sidebar" id="sidebar" data-motopress-type="static-sidebar"  data-motopress-sidebar-file="sidebar.php">
+            <?php //get_sidebar(); ?>
+          </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Add a new repeating section
+var attrs = ['for', 'id', 'name'];
+function resetAttributeNames(section) { 
+    var tags = section.find('input, label'), idx = section.index();
+    tags.each(function() {
+      var $this = $(this);
+      $.each(attrs, function(i, attr) {
+        var attr_val = $this.attr(attr);
+        if (attr_val) {
+            $this.attr(attr, attr_val.replace(/_\d+$/, '_'+(idx + 1)))
+        }
+      })
+    })
+}
+              
+$('.addNewRow2').click(function(e){
+	e.preventDefault();
+	var lastRepeatingGroup = $('.repeatingSection').last();
+	var cloned = lastRepeatingGroup.clone(true) 
+	console.log(cloned); 
+	cloned.insertAfter(lastRepeatingGroup);
+	resetAttributeNames(cloned);
+});
+
+$(function() {
+	$( ".datepicker" ).datepicker();
+	$( ".timepicker" ).timepicker();
+});	
+
+//size on change show input field
+$('.orderform_brand').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    var this_id = $(this).attr('id');
+    var this_id_array = this_id.split('-');
+	if (valueSelected == 'Specific Brand') {
+		$('input[name="orderform[order][' + this_id_array[1] + '][text_brand]"]').show();
+	} else {
+		$('input[name="orderform[order][' + this_id_array[1] + '][text_brand]"]').hide();
+	}	
+});
+
+//size on change show input field
+$('.orderform_size').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    var this_id = $(this).attr('id');
+    var this_id_array = this_id.split('-');
+	if (valueSelected == 'Specific Size') {
+		$('input[name="orderform[order][' + this_id_array[1] + '][text_size]"]').show();
+	} else {
+		$('input[name="orderform[order][' + this_id_array[1] + '][text_size]"]').hide();
+	}	
+});
+
+$('input:radio[name="orderform[home_during_deliver]"]').change(function(){
+	if ($(this).val() == 'no') {
+		$('.leave-at-door').show();
+		$('.i_agree_terms').show();
+		$('.leave-at-door-no').show();
+		$('.leave-at-door-yes').hide();
+	} else {
+		$('.leave-at-door').show();
+		$('.i_agree_terms').show();
+		$('.leave-at-door-yes').show();
+		$('.leave-at-door-no').hide();
+	}
+});
+
+$("#online_order_form").submit(function(e) {
+    if(!$('input[name="orderform[i_agree_terms]"]:checked').length) {
+        //alert("Please select at least one to upgrade.");
+
+        //stop the form from submitting
+        return false;
+    }
+
+    return true;
+});
+</script>
+
+
+<script type="text/javascript"><!--
+var image_row = 6;
+
+function addImage() {
+html  = '<tr class="repeatingSection">';
+html += '    <td width="21%">Item';
+html += '      <input type="text" name="orderform[order][' + image_row + '][item]" style="width: 130px;"></td>';
+html += '    <td width="15%">Brand';
+html += '      <select id="orderform_brand-' + image_row + '" class="orderform_brand" name="orderform[order][' + image_row + '][item_brand]" style="margin-left: 2px; width: 90px;">';
+html += '        <option value="" selected>Options</option>';
+html += '        <option value="Generic">Generic</option>';
+html += '        <option value="Brand Name">Brand Name</option>';
+html += '        <option value="Specific Brand">Specific Brand</option>';
+html += '      </select>';
+html += '      <input style="width: 90px; display:none" type="text" name="orderform[order][' + image_row + '][text_brand]"></td>';
+html += '    <td width="13%">Size';
+html += '      <select id="orderform_size-' + image_row + '" class="orderform_size" name="orderform[order][' + image_row + '][item_size]" style="margin-left: 2px; width: 90px;">';
+html += '        <option value="" selected>Options</option>';
+html += '        <option value="Not Sure">Not Sure</option>';
+html += '        <option value="Specific Size">Specific Size</option>';
+html += '      </select>';
+html += '      <input style="width: 90px; display:none" type="text" name="orderform[order][' + image_row + '][text_size]"></td>';
+html += '    <td width="7%">Qty';
+html += '      <input type="number" name="orderform[order][' + image_row + '][qty]" style="width: 30px;" value="1" min="1"></td>';
+html += '    <td width="32%">Description';
+html += '      <textarea id="description" rows="10" cols="6" name="orderform[order][' + image_row + '][description]" placeholder="(optional: Kosher Certification,Cholov Yisroel, etc.)" style="height: 30px; width: 250px;"></textarea></td>';
+html += '  </tr>';
+
+	
+	$('.repeated-order-form-fields table').append(html);
+	
+	image_row++;
+}
+//--></script>
+<style type="text/css">
+.online-ordering-form input[type='checkbox'],
+.online-ordering-form input[type='radio'] {
+	margin-top: 0;
+}
+.repeatingSection > td {
+    padding: 12px 5px 12px 0;
+}
+</style>
+
+<!-- Modal -->
+<div class="modal fade" id="availableTimes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" name="orderform[city]" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Available times</h4>
+      </div>
+      <div class="modal-body"> You may submit an order for next day delivery or you may schedule a delivery for a future date. Orders are delivered Monday-Thursday between 11 AM- 6 PM, and Fridays between 9 AM-12 PM. Please allow up to 2 hours from your selected time. </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+.modal-backdrop {
+	position: relative;
+}
+
+</style>
+<?php get_footer(); ?>

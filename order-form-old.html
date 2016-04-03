@@ -1,0 +1,151 @@
+<p style="font-style: italic;">
+	     Thank you for choosing Seven Mile Market for your grocery delivery service. Please fill out the form below with as much detail as possible. The following legend should be used for the Substitute and Kosher Specification columns. If you choose Other, please specify your reqest in the comment field. You are not required to use the specific terms and you can write any specific instructions. If you have any questions, do not hesitate to call or email!
+</p>
+
+
+  <br>
+
+
+ 
+<table border="0" cellpadding="0">
+	<tr>
+		<td>Have you previously ordered from us?</td>
+		<td>[radio radio-827 "Yes" "No"]</td>
+	</tr>
+</table>
+
+<table border="0" cellpadding="0">
+	<tr class="previous-order-no">
+		<td>Name <br> [text* your-name]</td>
+		<td>Email Address <br>[email* your-email]</td>
+		<td>Phone Number <br>[tel tel-99]</td>
+		<td></td>
+	</tr>
+</table>
+
+
+<table border="0" cellpadding="0">
+	<tr>
+		<td>Will you be home during delivery hours?</td>
+		<td>[radio radio-290 "Yes" "No"]</td>
+	</tr>
+</table>
+
+<table border="0" cellpadding="0">
+	<tr class="home-during-delivery-no">
+		<td>Delivery Address 
+	    [text deliveryAddress]</td>
+		<td>Delivery Time Slot 
+	    [date date-240]</td>
+		<td>Date 
+	    [datetime datetime-555 date-format:mm/dd/yy time-format:HH:mm]</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+<p>Please specify any additional information (e.g. elevator delivery, dog on premises, secure complex, etc):</p>
+[textarea textarea-623]
+
+
+
+<div class="leave-at-door">
+<p>If you will not be home and you would like us to leave the delivery at your door, (you may) fill out the Drop Delivery Request (and send it along with your order).</p>
+    <table border="0" cellpadding="0">
+        <tr>
+            <td>Leave at Door</td>
+            <td>[radio radio-12 "Yes" "No"]</td>
+        </tr>
+    </table>
+    <div class="leave-at-door-no">I authorize Seven Mile Market to leave the order I placed on [datetime datetime-199 date-format:mm/dd/yy first-day:0]  (order date) by my door on[datetime datetime-52 date-format:mm/dd/yy]  (delivery date) if no one is available to accept the order. I understand that Seven Mile Market is not responsible for any damage or spoilage that may occur after the order is delivered. I understand that all perishable items are not returnable unless it was an item that I did not order.
+    </div>   
+</div>              
+              
+              
+<strong><h2>Credit Card Authorization Form</h2></strong>
+<table border="0" cellpadding="0">
+		<td width="135">Last Name</td>
+		<td width="167">[text* lastName]</td>
+		<td width="115">First Name</td>
+		<td width="185">[text* firstName]</td>
+	</tr>
+	<tr>
+		<td>Full Name on the Card</td>
+		<td colspan="3">[text* cardName]</td>
+		</tr>
+	<tr>
+		<td>Type of Card</td>
+		<td colspan="2">[radio radio-462 "Visa:" "Ms:" "AmEx:" "Discover:" "Other:"] </td>
+		<td> [text other-card-type]</td>
+		</tr>
+	<tr>
+	  <td>&nbsp;</td>
+	  <td colspan="3">&nbsp;</td>
+	  </tr>
+</table>
+<table border="0" cellpadding="0">
+	<tr>
+		<td width="140">CC# Number</td>
+		<td width="220">[tel ccNumber 16/16]</td>
+		<td width="114">Expiration Date</td>
+		<td width="128">[tel* expiration 3/3] </td>
+	</tr>
+	<tr>
+		<td>Security Code</td>
+		<td>[tel* securityCord 3/3]</td>
+	</tr>
+	<tr>
+		<td>Billing Address</td>
+		<td>[textarea billAddress]</td>
+		<td colspan="2">
+        	<br>
+        <table width="200" border="0" cellpadding="5">
+	      <tr>
+		      <td>City</td>
+		      <td>[text* City]</td>
+	        </tr>
+		    <tr>
+		      <td>State</td>
+		      <td>[text* stare]</td>
+	        </tr>
+		    <tr>
+		      <td>Zip</td>
+		      <td>[tel zipCode]</td>
+	      </tr>
+		    <tr>
+		      <td>&nbsp;</td>
+		      <td>&nbsp;</td>
+	      </tr>
+        </table></td>
+	</tr>
+    <tr>
+		<td>Email Address</td>
+		<td>[email* your-emai]</td>
+		<td>Home Phone Number</td>
+		<td>[tel homeNumber]</td>
+	</tr>
+    
+	<tr>
+		<td>Cell Phone Number</td>
+		<td>[tel cellNumber]</td>
+        <td>Best times to Reach Your</td>
+		<td>[tel bestTime]</td>
+	</tr>
+	<tr>
+		<td>Delivery Address if Different from above</td>
+		<td>[textarea deliveryAddress]</td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
+
+By signing this form, you authorize SEVEN MILE MARKET to charge your card for deliveries. Your credit card will be charged prior to all deliveries. Seven Mile Market has the authority to charge your card any additional fees that may ensue. If you are not present to receive your order and you did not send a Drop Delivery Request form we will charge you a $10 restocking fee and you will need to resubmit your order.
+
+
+
+
+
+
+[checkbox* checkbox-863 use_label_element ""] <a style="text-decoration:underline;" href='http://staimanmedia.com/seven-mile-market/delivery-terms-and-conditions/' target='_blank'>I have read and agree to the general information and terms and conditions</a>
+
+ SIGNATURE: [text text-76]
+ 
+<p>[submit "Submit"]</p>
