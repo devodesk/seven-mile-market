@@ -12,7 +12,11 @@ get_header(); ?>
       <div class="<?php echo apply_filters( 'cherry_home_layout', 'span12' ); ?>" data-motopress-wrapper-file="page-home.php" data-motopress-wrapper-type="content">
         <div class="row">
           <div class="<?php echo apply_filters( 'cherry_home_layout', 'span12' ); ?>" data-motopress-type="static" data-motopress-static-file="static/static-slider.php">
+          <?php if( get_field('smm_home_show_slider_or_image') == 'Slider' ): ?>
             <?php get_template_part("static/static-slider"); ?>
+          <?php else : ?>
+          	<a href="<?php echo get_field('smm_home_static_image_popup_url');?>"><img src="<?php echo get_field('smm_home_static_image');?>" alt=""></a>
+		  <?php endif; ?>
           </div>
         </div>
         <div class="row">
