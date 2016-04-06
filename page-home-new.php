@@ -15,8 +15,20 @@ get_header(); ?>
           <?php if( get_field('smm_home_show_slider_or_image') == 'Slider' ): ?>
             <?php get_template_part("static/static-slider"); ?>
           <?php else : ?>
-          	<a href="<?php echo get_field('smm_home_static_image_popup_url');?>"><img src="<?php echo get_field('smm_home_static_image');?>" alt=""></a>
-		  <?php endif; ?>
+          	
+              <?php if( get_field('number_of_images') == '2' ): ?>
+                <div class="row">
+                  <div class="span6">
+                    <a href="<?php echo get_field('smm_home_static_image_popup_url1');?>"><img src="<?php echo get_field('smm_home_static_image1');?>" alt=""></a>
+                  </div>
+                  <div class="span6">
+                    <a href="<?php echo get_field('smm_home_static_image_popup_url2');?>"><img src="<?php echo get_field('smm_home_static_image2');?>" alt=""></a>
+                  </div>
+                </div>
+              <?php else : ?>
+                <a href="<?php echo get_field('smm_home_static_image_popup_url');?>"><img src="<?php echo get_field('smm_home_static_image1');?>" alt=""></a>
+              <?php endif; ?>
+		      <?php endif; ?>
           </div>
         </div>
         <div class="row">
